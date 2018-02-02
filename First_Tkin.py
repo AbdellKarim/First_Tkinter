@@ -3,8 +3,9 @@ from tkinter import Toplevel
 from tkinter import ttk
 from PIL import Image , ImageTk
 from tkinter import messagebox
-
-import datetime
+import os
+import sys
+import datetime 
 import time
 
 
@@ -117,7 +118,7 @@ class Student_graph():
        #the frame 
         self.frame1 = ttk.Frame(self.newtbook_information)
         self.frame2 = ttk.Frame(self.newtbook_information)
-       
+       #
         self.newtbook_information.add(self.frame1 , text = 'Information')
         self.newtbook_information.add(self.frame2 , text = 'Information')
        
@@ -143,52 +144,64 @@ class Student_graph():
         print("sasa")
         maxinumber_of_note = 50
         strat_note = 0
-    #    while strat_note <maxinumber_of_note :
-    #       start_note = strat_note + 1
-           
-     #      if start_note == maxinumber_of_note :
-     #          messagebox.showinfo("the Note Was Pliented", "you must delete some Note")
-               
-        self.framea = Toplevel(master)
-        self.framea.config(width= 150 , height= 150)
-        Top = self.framea
+        if strat_note <maxinumber_of_note :
+           start_note = strat_note + 1          
+           if start_note == maxinumber_of_note :
+               messagebox.showinfo("the Note Was Pliented", "you must delete some Note")
+           else :  
+                self.framea = Toplevel(master)
+                self.framea.config(width= 150 , height= 150)
+                Top = self.framea
         #Top['Toplevel'] = self.framea
-        self.label = Label(Top, text= 'File :')
-        self.label.grid(row = 0 , column = 0,sticky = "NW")
-        self.label1 = Label(Top, text= 'creat new file')
-        self.label1.grid(row = 0 , column = 1, sticky = "WENS")
+                self.label = Label(Top, text= 'File :')
+                self.label.grid(row = 0 , column = 0,sticky = "NW")
+                self.label1 = Label(Top, text= 'creat new file')
+                self.label1.grid(row = 0 , column = 1, sticky = "WENS")
                                                                                         #title
-        self.label1 = Label(Top, text= 'Title')
-        self.label1.grid(row = 1 , column =0 , sticky = "E")
+                self.label1 = Label(Top, text= 'Title')
+                self.label1.grid(row = 1 , column =0 , sticky = "E")
+        ############## Title of the Notbook its Entre title easy way
+                self.entre = ttk.Entry(Top, width = 50)
+                self.entre.grid(row = 1 ,column = 1)
+        ############## Text or information you add in notbook
+                self.label1 = Label(Top, text= 'Note :')
+                self.label1.grid(row = 2 , column = 1, sticky = "WENS")
         
-        self.entre = ttk.Entry(Top, width = 50)
-        self.entre.grid(row = 1 ,column = 1)
+                self.text= Text(Top , width= 60 , height= 20)
+                self.text.grid(row = 3 , column = 1)
+                    #Button of the cree clandear for Cancel Nite
+                self.buttoncancel = ttk.Button(Top , text = "Cancel" , command= lambda:self.framea.destroy())
+                self.buttoncancel.grid(row = 4 , column = 1,ipady=15, sticky = "E" )
         
-        self.label1 = Label(Top, text= 'Note :')
-        self.label1.grid(row = 2 , column = 1, sticky = "WENS")
+                        #Butoon for save information to netbook
+                self.buttoncancel = ttk.Button(Top , text = "Finish", command= lambda:self.Save_Notbook(master))
+      ############## self.buttoncancel.grid(row = 4 , column = 0,sticky = "WENS",columnspan = 1)
+                self.buttoncancel.place(x= 360 , y =387,height =55)
         
-        self.text= Text(Top , width= 60 , height= 20)
-        self.text.grid(row = 3 , column = 1)
+    def Save_Notbook(self, master):
+       # spath = 'C:\Users\Bac\eclipse-workspace\gg\Note_'
         
-        self.buttoncancel = ttk.Button(Top , text = "Cancel")
-        self.buttoncancel.grid(row = 4 , column = 1,ipady=15, sticky = "E" )
+        print(os.listdir())
         
-        
-        self.buttoncancel = ttk.Button(Top , text = "Finish")
-      #  self.buttoncancel.grid(row = 4 , column = 0,sticky = "WENS",columnspan = 1)
-        self.buttoncancel.place(x= 360 , y =387,height =55)
-               
-        
-               
-            
-               
-           
-           
-        
-    
+        entre  = self.entre.get()
+        f = open("test.txt", "w")
+        f.write(entre)
+        f.close()
 
-    
+       
             
+        self.frame1 = ttk.Frame(self.newtbook_information)
+        self.newtbook_information.add(self.frame1 , text = entre)
+            
+    def loop_file(self):
+       
+ 
+       pass
+   
+
+      #  f = open("test.txt", "w")
+     #   f.write()
+       # f.close()
 
 def main():
     root = Tk()
@@ -202,6 +215,7 @@ def main():
     student.information_personnel(root)
     student.Image(root)
    # student.Point(root)
+    student.loop_file()
 
     root.mainloop()
 
